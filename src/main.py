@@ -42,11 +42,7 @@ def crear_asistencia(request: dict = Body(...)):  # Captura el JSON como dict
     nombre = request["nombre"]
     estado = request["estado"]
 
-    # Verificar si el estado ya existe
-    for u in asistencias_db:
-        if u["estado"] == estado:
-            return {"error": "El estado ya está registrado"}
-
+    
     # Crear nueva asistencia
     nueva_asistencia = {
         "id": contador_id,
@@ -72,9 +68,6 @@ def actualizar_asistencia(asistencia_id: int, request: dict = Body(...)):
     for i, u in enumerate(asistencias_db):
         if u["id"] == asistencia_id:
             # Verificar si el nuevo estado ya existe (excepto en el mismo usuario)
-            for otro_u in asistencias_db:
-                if otro_u["estado"] == estado and otro_u["id"] != asistencia_id:
-                    return {"error": "El estado ya está registrado por otro usuario"}
 
             asistencias_db[i] = {
                 "id": asistencia_id,
